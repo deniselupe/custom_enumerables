@@ -52,6 +52,21 @@ module Enumerable
 
     return result.include?(true) ? false : true
   end
+
+  # My version of .count()
+  def my_count(&my_block)
+    if block_given?
+      result = []
+
+      self.each do |elem|
+        result << elem if my_block.call(elem) === true
+      end
+
+      return result.length
+    else
+      return self.length
+    end
+  end
 end
 
 # You will first have to define my_each
