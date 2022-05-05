@@ -7,6 +7,28 @@ module Enumerable
 
     return self
   end
+
+  # My version of .select()
+  def my_select(&my_block)
+    result = []
+
+    self.my_each do |elem|
+      result << elem if my_block.call(elem) === true
+    end
+
+    result
+  end
+
+  # My version of .all?()
+  def my_all?(&my_block)
+    result = []
+
+    self.my_each do |elem|
+      my_block.call(elem) ===  true ? result << true : result << false
+    end
+
+    return result.include?(false) ? false : true
+  end
 end
 
 # You will first have to define my_each
