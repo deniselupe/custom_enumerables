@@ -58,7 +58,7 @@ module Enumerable
     if block_given?
       result = []
 
-      self.each do |elem|
+      self.my_each do |elem|
         result << elem if my_block.call(elem) === true
       end
 
@@ -66,6 +66,17 @@ module Enumerable
     else
       return self.length
     end
+  end
+
+  # My version of .map()
+  def my_map(&my_block)
+    result = []
+
+    self.my_each do |elem|
+      result << my_block.call(elem)
+    end
+
+    result
   end
 end
 
