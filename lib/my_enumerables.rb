@@ -78,6 +78,22 @@ module Enumerable
 
     result
   end
+
+  # My version of my_inject()
+  def my_inject(init_val = nil, sym = nil)
+    sym = init_val if init_val.is_a?(Symbol)
+    result = !init_val.is_a?(Symbol) && !init_val.nil? ? init_val : 0
+    return 'ERROR: No block given' if sym.nil? && !block_given?
+
+    if block_given?
+      self.my_each { |elem| result = yield(result, elem) }
+    else
+      sym = sym.to_proc
+      self.my_each { |elem| result = sym.call(result, elem) }
+    end
+
+    result
+  end
 end
 
 # You will first have to define my_each
