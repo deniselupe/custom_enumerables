@@ -29,6 +29,18 @@ module Enumerable
 
     return result.include?(false) ? false : true
   end
+
+  # My version of .any?()
+  def my_any?(&my_block)
+    result = []
+
+    self.my_each do |elem|
+      my_block.call(elem) === true ? result << true : result << false
+    end
+
+    return false if result.empty?
+    return result.include?(true) ? true : false
+  end
 end
 
 # You will first have to define my_each
