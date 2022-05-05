@@ -41,6 +41,17 @@ module Enumerable
     return false if result.empty?
     return result.include?(true) ? true : false
   end
+
+  # My version of .none?()
+  def my_none?(&my_block)
+    result = []
+
+    self.my_each do |elem|
+      my_block.call(elem) === true ? result << true : result << false
+    end
+
+    return result.include?(true) ? false : true
+  end
 end
 
 # You will first have to define my_each
