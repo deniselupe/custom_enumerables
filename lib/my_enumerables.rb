@@ -5,7 +5,7 @@ module Enumerable
       yield(self[i], i)
     end
 
-    return self
+    self
   end
 
   # My version of .select()
@@ -24,10 +24,10 @@ module Enumerable
     result = []
 
     self.my_each do |elem|
-      my_block.call(elem) ===  true ? result << true : result << false
+      result << my_block.call(elem)
     end
 
-    return result.include?(false) ? false : true
+    result.include?(false) ? false : true
   end
 
   # My version of .any?()
@@ -35,11 +35,11 @@ module Enumerable
     result = []
 
     self.my_each do |elem|
-      my_block.call(elem) === true ? result << true : result << false
+      result << my_block.call(elem)
     end
 
     return false if result.empty?
-    return result.include?(true) ? true : false
+    result.include?(true) ? true : false
   end
 
   # My version of .none?()
@@ -47,25 +47,23 @@ module Enumerable
     result = []
 
     self.my_each do |elem|
-      my_block.call(elem) === true ? result << true : result << false
+      result << my_block.call(elem)
     end
 
-    return result.include?(true) ? false : true
+    result.include?(true) ? false : true
   end
 
   # My version of .count()
   def my_count(&my_block)
-    if block_given?
-      result = []
+    return self.length unless block_given?
 
-      self.my_each do |elem|
-        result << elem if my_block.call(elem) === true
-      end
+    result = []
 
-      return result.length
-    else
-      return self.length
+    self.my_each do |elem|
+      result << elem if my_block.call(elem) === true
     end
+
+    result.length
   end
 
   # My version of .map()
